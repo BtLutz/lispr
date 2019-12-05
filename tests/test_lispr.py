@@ -5,7 +5,7 @@ import lispr
 
 class TestLispr(TestCase):
     def setUp(self):
-        self.environment = lispr.new_environment()
+        self.environment = {}
         self.default_tokens = deque(["(", "1", "2", "+", ")"])
         self.default_ast = [1, 2, "+"]
         self.nested_tokens = deque(["(", "(", "1", "2", "+", ")", "1", "+", ")"])
@@ -19,8 +19,10 @@ class TestLispr(TestCase):
         self.cons_ast = [1, 2, "cons"]
         self.car_ast = [[1, 2], "'", "car"]
         self.cdr_ast = [[1, 2], "'", "cdr"]
+        self.cdr_list_ast = [[1, 2, 3], "'", "cdr"]
         self.atom_true_ast = [1, "atom?"]
         self.atom_false_ast = [[1, 2], "'", "atom?"]
+        self.cond = [["one", "'", [1, 2, "eq?"]], ["two", "'", [1, 1, "eq?"]], "cond"]
 
     def test_tokenize_string_default(self):
         res = lispr.tokenize_string("(1 2 +)")
@@ -74,6 +76,10 @@ class TestLispr(TestCase):
         res = lispr.evaluate_ast(self.cdr_ast, self.environment)
         self.assertEqual(2, res)
 
+    def test_evaluate_cdr_list(self):
+        res = lispr.evaluate_ast(self.cdr_list_ast, self.environment)
+        self.assertEqual([2, 3], res)
+
     def test_atom_true(self):
         res = lispr.evaluate_ast(self.atom_true_ast, self.environment)
         self.assertTrue(res)
@@ -85,3 +91,12 @@ class TestLispr(TestCase):
     def test_eq_mul_div(self):
         res = lispr.evaluate_ast([[5, [5, 5, "/"], "*"], 5, "eq?"], self.environment)
         self.assertTrue(res)
+
+    def test_define_mul(self):
+        lispr.evaluate_ast(self.define_ast, self.environment)
+        res = lispr.evaluate_ast(["a", 2, "*"], self.environment)
+        self.assertEqual(2, res)
+
+    def test_cond(self):
+        res = lispr.evaluate_ast(self.cond, self.environment)
+        self.assertEqual("two", res)

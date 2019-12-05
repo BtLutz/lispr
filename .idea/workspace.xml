@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79c57c6e-a6ae-462c-a626-b2ac28fd040f" name="Default Changelist" comment="" />
+    <list default="true" id="79c57c6e-a6ae-462c-a626-b2ac28fd040f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lispr.py" beforeDir="false" afterPath="$PROJECT_DIR$/lispr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_lispr.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_lispr.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +14,19 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lispr.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="96">
+              <caret line="92" column="21" lean-forward="true" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test1.lisp">
           <provider selected="true" editor-type-id="text-editor">
@@ -19,23 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lispr.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="101" column="74" selection-start-line="101" selection-start-column="74" selection-end-line="101" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_lispr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="85" column="56" selection-start-line="85" selection-start-column="56" selection-end-line="85" selection-end-column="56" />
+            <state relative-caret-position="105">
+              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -55,7 +60,11 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>print</find>
+      <find>Union[float, int, S</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -63,8 +72,8 @@
         <option value="$PROJECT_DIR$/test1.html" />
         <option value="$PROJECT_DIR$/notes" />
         <option value="$PROJECT_DIR$/test1.lisp" />
-        <option value="$PROJECT_DIR$/tests/test_lispr.py" />
         <option value="$PROJECT_DIR$/lispr.py" />
+        <option value="$PROJECT_DIR$/tests/test_lispr.py" />
       </list>
     </option>
   </component>
@@ -72,6 +81,7 @@
     <option name="width" value="1280" />
     <option name="height" value="800" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -91,6 +101,9 @@
       </pane>
     </panes>
   </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -103,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for test_lispr.TestLispr.test_eq_mul_div">
+  <component name="RunManager" selected="Python tests.Unittests for test_lispr.TestLispr">
     <configuration name="Unittests for test_lispr.TestLispr" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="terminal_browsing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,6 +128,20 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_lispr.TestLispr&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_lispr.TestLispr.test_cond" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="terminal_browsing" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_lispr.TestLispr.test_cond&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -146,20 +173,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_lispr.TestLispr.test_tokenize_string_default" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="terminal_browsing" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_lispr.TestLispr.test_tokenize_string_default&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Unittests for test_lispr.TestLispr.test_tokenize_string_quote" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="terminal_browsing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -176,11 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_eq_mul_div" />
         <item itemvalue="Python tests.Unittests for test_lispr.TestLispr" />
+        <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_cond" />
+        <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_eq_mul_div" />
         <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_tokenize_string_quote" />
         <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_evaluate_ast_define" />
-        <item itemvalue="Python tests.Unittests for test_lispr.TestLispr.test_tokenize_string_default" />
       </list>
     </recent_temporary>
   </component>
@@ -198,68 +211,62 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.04 at 07h 55m 27s.xml">
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 13m 33s.xml">
       <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.04 at 07h 55m 37s.xml">
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 17m 20s.xml">
       <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.04 at 07h 56m 29s.xml">
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 20m 09s.xml">
       <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.04 at 07h 58m 29s.xml">
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 23m 28s.xml">
       <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 02m 50s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 44m 27s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 03m 16s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 45m 18s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 03m 17s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 46m 23s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 05m 52s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 47m 46s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 08m 18s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 56m 05s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_lispr_TestLispr_test_eq_mul_div - 2019.12.04 at 08h 10m 23s.xml">
-      <configuration name="Unittests for test_lispr.TestLispr.test_eq_mul_div" configurationId="tests" />
+    <history-entry file="Unittests_for_test_lispr_TestLispr - 2019.12.05 at 08h 56m 20s.xml">
+      <configuration name="Unittests for test_lispr.TestLispr" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="709" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="715" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" sideWeight="0.49642575" weight="0.32744783" />
-      <window_info anchor="bottom" id="Terminal" sideWeight="0.49960285" weight="0.32905295" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.50357425" side_tool="true" weight="0.32744783" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49642575" visible="true" weight="0.3306321" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49642575" visible="true" weight="0.32744783" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49960285" weight="0.32744783" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50357425" side_tool="true" weight="0.32744783" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49642575" weight="0.32744783" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.html" />
     <entry file="file://$PROJECT_DIR$/notes">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -276,8 +283,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_lispr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="85" column="56" selection-start-line="85" selection-start-column="56" selection-end-line="85" selection-end-column="56" />
+        <state relative-caret-position="105">
+          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -286,8 +293,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lispr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="101" column="74" selection-start-line="101" selection-start-column="74" selection-end-line="101" selection-end-column="74" />
+        <state relative-caret-position="96">
+          <caret line="92" column="21" lean-forward="true" selection-start-line="92" selection-start-column="21" selection-end-line="92" selection-end-column="21" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
