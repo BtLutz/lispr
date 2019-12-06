@@ -1,5 +1,5 @@
 import operator
-from typing import List, Union, Deque, Dict
+from typing import List, Union, Deque, Optional, Dict
 from collections import deque
 import argparse
 
@@ -10,55 +10,37 @@ NumberTypes = (float, int)
 Symbol = str
 
 
-def define(symbol: str, value: Union[List, str], environment: Dict) -> None:
-    value = evaluate_ast(value, environment)
+def define(ast: Deque[str], environment: Dict) -> None:
+    try:
+        symbol = ast[0]
+        value = evaluate_ast(ast[1], environment)
+    except IndexError:
+        raise SyntaxError("Define lists must be two elements long.")
     if symbol in environment:
         raise ValueError(f"Cannot redefine symbol {symbol}")
     else:
         environment[symbol] = value
 
 
-def condition(*branches, environment: Dict) -> AtomicType:
-    for cond_branch in branches:
+def condition(ast: List[str], environment: Dict) -> AtomicType:
+    for cond_branch in ast:
         branch, cond = cond_branch[:-1], cond_branch[-1]
         if cond == "else" or evaluate_ast(cond, environment):
             return evaluate_ast(branch, environment)
 
 
-def car(*ast, environment: Dict) -> AtomicType:
-    return evaluate_ast(list(ast), environment=environment)[0]
-
-
-def cdr(*ast, environment: Dict) -> AtomicType:
-    res = evaluate_ast(list(ast), environment)
-    return res[1] if len(res) < 3 else res[1:]
-
-
-def atom(*ast, environment: Dict) -> bool:
-    return type(ast[0]) in AtomicTypes
-
-
-def quote(*ast, environment: Dict) -> str:
-    return ast[0]
-
-
 COMPLEX_FORMS = {
     "define": define,
-    "cond": condition,
-    "car": car,
-    "cdr": cdr,
-    "atom?": atom,
-    "quote": quote
+    "cond": condition
 }
 
-
 NORMAL_FORMS = {
-    "+": lambda x, y, environment: operator.add(evaluate_ast(x, environment), evaluate_ast(y, environment)),
-    "-": lambda x, y, environment: operator.sub(evaluate_ast(x, environment), evaluate_ast(y, environment)),
-    "/": lambda x, y, environment: operator.truediv(evaluate_ast(x, environment), evaluate_ast(y, environment)),
-    "*": lambda x, y, environment: operator.mul(evaluate_ast(x, environment), evaluate_ast(y, environment)),
-    "eq?": lambda x, y, environment: operator.eq(evaluate_ast(x, environment), evaluate_ast(y, environment)),
-    "cons": lambda x, y, environment: [x, y]
+    "+": lambda x, y: operator.add(x, y),
+    "-": lambda x, y: operator.sub(x, y),
+    "/": lambda x, y: operator.truediv(x, y),
+    "*": lambda x, y: operator.mul(x, y),
+    "eq?": lambda x, y: operator.eq(x, y),
+    "cons": lambda x, y: [x, y]
 }
 
 
@@ -109,8 +91,18 @@ def evaluate_ast(ast: Union[Symbol, List], environment: Dict) -> AtomicType:
     keyword = ast.pop()
     if keyword == "'":
         return ast[0]
-    elif keyword in FORMS:
-        return FORMS[keyword](*ast, environment=environment)
+    elif keyword == "atom?":
+        return type(ast[0]) in AtomicTypes and not (isinstance(ast[0], str) and ast[0] == "'")
+    elif keyword == "car":
+        return evaluate_ast(ast, environment)[0]
+    elif keyword == "cdr":
+        res = evaluate_ast(ast, environment)
+        return res[1] if len(res) < 3 else res[1:]
+    elif keyword in NORMAL_FORMS:
+        x, y = ast
+        return FORMS[keyword](evaluate_ast(x, environment), evaluate_ast(y, environment))
+    elif keyword in COMPLEX_FORMS:
+        return FORMS[keyword](ast, environment)
     else:
         raise ValueError(f"Undefined symbol {keyword}")
 
@@ -128,8 +120,8 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("File not found.")
         quit()
-    env = {}
+    environment = {}
     for line in f.readlines():
-        res = execute_statement(line, env)
-        if res is not None:
+        res = execute_statement(line, environment)
+        if res:
             print(res)
