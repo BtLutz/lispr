@@ -29,7 +29,14 @@ def tokenize(s):
     :param s: "(1 2 +)"
     :return: ["(", "1", "2", "+", ")"]
     """
-    return s.replace("(", " ( ").replace(")", " ) ").split()
+    res = s.replace("(", " ( ").replace(")", " ) ").split()
+    final_res = []
+    for token in res:
+        if token != "'" and token[-1] == "'":
+            final_res.extend([token[:-1], "'"])
+        else:
+            final_res.append(token)
+    return final_res
 
 
 def read_from_tokens(tokens):

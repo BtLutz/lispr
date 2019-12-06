@@ -39,6 +39,10 @@ class TestLispr(TestCase):
         res = lispr.tokenize("((1 2)' quote)")
         self.assertEqual(self.quote_tokens, res)
 
+    def test_tokenize_quote_atom(self):
+        res = lispr.tokenize("(a' atom?)")
+        self.assertEqual(["(", "a", "'", "atom?", ")"], res)
+
     def test_read_from_tokens_default(self):
         res = lispr.read_from_tokens(self.default_tokens)
         self.assertEqual(self.default_ast, res)
