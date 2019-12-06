@@ -19,7 +19,6 @@ def define(symbol: str, value: Union[List, str], environment: Dict) -> None:
 
 
 def condition(*branches, environment: Dict) -> AtomicType:
-    print(branches)
     for cond_branch in branches:
         branch, cond = cond_branch[:-1], cond_branch[-1]
         if cond == "else" or evaluate_ast(cond, environment):
