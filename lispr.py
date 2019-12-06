@@ -1,127 +1,181 @@
-import operator
-from typing import List, Union, Deque, Optional, Dict
-from collections import deque
-import argparse
+# Lispy: Scheme Interpreter in Python
+# (c) Peter Norvig, 2010-16; See http://norvig.com/lispy.html
+# Updated by Brian Lutz (Dec. 5, 2019) for PicnicHealth
+from __future__ import division
+import operator as op
+
+# Types
+Symbol = str  # A Lisp Symbol is implemented as a Python str
+List = list  # A Lisp List is implemented as a Python list
+Number = (int, float)  # A Lisp Number is implemented as a Python int or float
+AtomicTypes = (float, int, str)
 
 
-AtomicType = Union[str, float, int]
-AtomicTypes = (str, float, int)
-NumberTypes = (float, int)
-Symbol = str
+# Parsing: parse, tokenize, and read_from_tokens
+def parse(program):
+    """
+    Converts a string into a tokenized string, then converts into a scheme expression. The scheme expression is a
+    list expression containing other list expressions and/or atomic expressions.
+    :param program: "(1 (1 1 +) +)"
+    :return: [[1, [1, 1, "+"], "+"]
+    """
+    return read_from_tokens(tokenize(program))
 
 
-def define(ast: Deque[str], environment: Dict) -> None:
-    try:
-        symbol = ast[0]
-        value = evaluate_ast(ast[1], environment)
-    except IndexError:
-        raise SyntaxError("Define lists must be two elements long.")
-    if symbol in environment:
-        raise ValueError(f"Cannot redefine symbol {symbol}")
-    else:
-        environment[symbol] = value
+def tokenize(s):
+    """
+    Takes a string *s* and adds a space before and after each opening and closing parenthesis, then splits the string on
+    spaces.
+    :param s: "(1 2 +)"
+    :return: ["(", "1", "2", "+", ")"]
+    """
+    return s.replace("(", " ( ").replace(")", " ) ").split()
 
 
-def condition(ast: List[str], environment: Dict) -> AtomicType:
-    for cond_branch in ast:
-        branch, cond = cond_branch[:-1], cond_branch[-1]
-        if cond == "else" or evaluate_ast(cond, environment):
-            return evaluate_ast(branch, environment)
-
-
-COMPLEX_FORMS = {
-    "define": define,
-    "cond": condition
-}
-
-NORMAL_FORMS = {
-    "+": lambda x, y: operator.add(x, y),
-    "-": lambda x, y: operator.sub(x, y),
-    "/": lambda x, y: operator.truediv(x, y),
-    "*": lambda x, y: operator.mul(x, y),
-    "eq?": lambda x, y: operator.eq(x, y),
-    "cons": lambda x, y: [x, y]
-}
-
-
-FORMS = {}
-FORMS.update(NORMAL_FORMS)
-FORMS.update(COMPLEX_FORMS)
-
-
-def tokenize_string(string: str) -> Deque[str]:
-    return deque(string.replace("(", " ( ").replace(")", " ) ").split())
-
-
-def assemble_ast_from_tokens(tokens: Deque[str]) -> Union[Symbol, List]:
+def read_from_tokens(tokens):
+    """
+    Takes a token string and turns it into a scheme expression. Characters that represent integers or floats
+    are converted to their types. Symbols like "a" or "b" are left as strings.
+    :param tokens: ["(", "1", "(", "1", "1", "+", ")", "+", ")"]
+    :return:[[1, [1, 1, "+"], "+"]
+    """
     if len(tokens) == 0:
-        raise ValueError("Unexpected EOF")
-    elif tokens[0] == "(":
-        tokens.popleft()
+        raise SyntaxError("unexpected EOF while reading")
+    token = tokens.pop(0)
+    if "(" == token:
         res = []
         while tokens[0] != ")":
-            res.append(assemble_ast_from_tokens(tokens))
-        tokens.popleft()
+            res.append(read_from_tokens(tokens))
+        tokens.pop(0)  # pop off ')'
         return res
-    elif tokens[0] == "(":
-        raise ValueError("Unexpected closure")
+    elif ")" == token:
+        raise SyntaxError("unexpected )")
     else:
-        if tokens[0].isdigit():
-            res = int(tokens[0])
-        elif tokens[0].isdecimal():
-            res = float(tokens[0])
-        else:
-            res = tokens[0]
-        tokens.popleft()
-        return res
+        return atom(token)
 
 
-def parse_lisp_from_string(string: str) -> Union[List, str]:
-    return assemble_ast_from_tokens(tokenize_string(string))
-
-
-def evaluate_ast(ast: Union[Symbol, List], environment: Dict) -> AtomicType:
-    if type(ast) in NumberTypes:
-        return ast
-    elif isinstance(ast, Symbol):
+def atom(token):
+    """
+    Converts atomic expressions represented as raw strings to their actual type. Supported types are int, float, and
+    if all else fails, str.
+    :param token: "a" | "1" | "1.1"
+    :return: "a" | 1 | 1.1
+    """
+    try:
+        return int(token)
+    except ValueError:
         try:
-            return environment[ast]
-        except KeyError:
-            raise ValueError(f"Undefined symbol {ast}")
-    keyword = ast.pop()
-    if keyword == "'":
-        return ast[0]
-    elif keyword == "atom?":
-        return type(ast[0]) in AtomicTypes and not (isinstance(ast[0], str) and ast[0] == "'")
-    elif keyword == "car":
-        return evaluate_ast(ast, environment)[0]
-    elif keyword == "cdr":
-        res = evaluate_ast(ast, environment)
-        return res[1] if len(res) < 3 else res[1:]
-    elif keyword in NORMAL_FORMS:
-        x, y = ast
-        return FORMS[keyword](evaluate_ast(x, environment), evaluate_ast(y, environment))
-    elif keyword in COMPLEX_FORMS:
-        return FORMS[keyword](ast, environment)
+            return float(token)
+        except ValueError:
+            return Symbol(token)  # Equivalent to str(token)
+
+
+# Environments
+def standard_env():
+    """
+    Creates an environment object and adds the normal forms and some special forms to the environment. These forms
+    just do I/O. That means no environment modification or control flow.
+    :return: Functions for the forms [+, -, *, /, car, cdr, cons, eq?, atom?]
+    """
+    """An environment with some Scheme standard procedures."""
+    env = Env()
+    env.update(
+        {
+            "+": op.add,
+            "-": op.sub,
+            "*": op.mul,
+            "/": op.truediv,
+            "car": lambda x: x[0],
+            "cdr": lambda x: x[1:] if len(x) > 2 else x[1],
+            "cons": lambda x, y: [x] + y if isinstance(y, list) else [x, y],
+            "eq?": op.eq,
+            "atom?": lambda x: type(x) in AtomicTypes,
+        }
+    )
+    return env
+
+
+class Env(dict):
+    """An environment: a dict of {'var':val} pairs, with an outer Env."""
+
+    def __init__(self, parms=(), args=(), outer=None):
+        self.update(zip(parms, args))
+        self.outer = outer
+
+    def find(self, var):
+        """Find the innermost Env where var appears."""
+        return self if (var in self) else self.outer.find(var)
+
+
+# Interaction: A REPL
+def repl(prompt="lis.py> ", env=None):
+    """A prompt-read-eval-print loop."""
+    env = env or standard_env()
+    while True:
+        val = eval(parse(input(prompt)), env)
+        if val is not None:
+            print(lispstr(val))
+
+
+def lispstr(exp):
+    """Convert a Python object back into a Lisp-readable string."""
+    if isinstance(exp, List):
+        return "(" + " ".join(map(lispstr, exp)) + ")"
     else:
-        raise ValueError(f"Undefined symbol {keyword}")
+        return str(exp)
 
 
-def execute_statement(statement: str, environment: Dict = None) -> AtomicType:
-    return evaluate_ast(parse_lisp_from_string(statement), environment or {})
+# Procedures
+class Procedure(object):
+    """A user-defined Scheme procedure."""
+
+    def __init__(self, parms, body, env):
+        self.parms, self.body, self.env = parms, body, env
+
+    def __call__(self, *args):
+        return eval(self.body, Env(self.parms, args, self.env))
+
+
+# eval
+def eval(x, env):
+    """
+    Takes in a scheme expression *x* and evaluates it using environment *env*. List expressions get a call to eval
+    recursively.
+    :param x: [[1, [1, 1, "+"], "+"]
+    :param env: {}
+    :return: 3
+    """
+    if isinstance(x, Symbol):  # variable reference
+        return env.find(x)[x]
+    elif not isinstance(x, List):  # constant literal
+        return x
+    keyword = x.pop()
+    if keyword in {"quote", "'"}:  # (quote exp)
+        return (
+            x[0]
+            if len(x) == 2
+            else " ".join(str(exp) for exp in x)
+            .replace("[", "(")
+            .replace("]", ")")
+            .replace("'", "")
+            .replace(",", "")
+        )
+    elif keyword == "cond":  # (if test conseq alt)
+        for cond_branch in x:
+            branch, cond = cond_branch[:-1], cond_branch[-1]
+            if cond == "else" or eval(cond, env):
+                return eval(branch, env)
+    elif keyword == "define":  # (define var exp)
+        var, exp = x
+        env[var] = eval(exp, env)
+    elif keyword == "lambda":  # (lambda (var...) body)
+        parms, body = x
+        return Procedure(parms, body, env)
+    else:  # (proc arg...)
+        proc = eval(keyword, env)
+        args = [eval(exp, env) for exp in x] if x[-1] != "'" else x[:-1]
+        return proc(*args)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Turn a basic file into LISP statements and execute them.")
-    parser.add_argument("--file", type=str)
-    args = parser.parse_args()
-    try:
-        f = open(args.file)
-    except FileNotFoundError:
-        print("File not found.")
-        quit()
-    environment = {}
-    for line in f.readlines():
-        res = execute_statement(line, environment)
-        if res:
-            print(res)
+    repl()
